@@ -2,7 +2,7 @@
 /* jshint camelcase: false */
 module.exports = function (grunt) {
 
-    "use strict";
+    'use strict';
 
     // Track the time of each task
     require('time-grunt')(grunt);
@@ -49,6 +49,6 @@ module.exports = function (grunt) {
      * Tasks
      */
     grunt.registerTask('js', ['browserify', 'usebanner:js']);
-    grunt.registerTask('default', []);
+    grunt.registerTask('default', ['js', 'watch']);
     
 };
