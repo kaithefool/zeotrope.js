@@ -1,7 +1,7 @@
 'use strict';
 
-var helpers = require('./helpers');
-var easings = require('./easings');
+var helpers = require('./helpers.js');
+var easings = require('./easings.js');
 
 module.exports = Timeline;
 
@@ -23,7 +23,6 @@ var defaults = {
 };
 
 Timeline.prototype = {
-
 	getProgress: function (dateTime) {
 		var now = dateTime || new Date();
 		if (now < this.start) {
@@ -34,5 +33,4 @@ Timeline.prototype = {
 			return this.easing( (now - this.start) / this.duration );
 		}
 	}
-
 };

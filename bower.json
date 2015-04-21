@@ -1,0 +1,20 @@
+{
+  "name": "zeotrope",
+  "version": "0.0.0",
+  "homepage": "https://github.com/kaithefool/zeotrope.js",
+  "authors": [
+    "Kai Lam <kai@e-mc2.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "paper": "~0.9.22"
+  }
+}
