@@ -12,7 +12,8 @@ ColumnClip.prototype.draw = function (canvas, progress) {
         w = opt.w - x,
         h = opt.h - (y * 2);
 
-    ctx.rect(Math.round(opt.x + x), Math.round(opt.y + y), Math.round(w), Math.round(h));
+    ctx.beginPath();
+    ctx.rect(Math.floor(opt.x + x), Math.floor(opt.y + y), Math.ceil(w), Math.ceil(h));
     ctx.fillStyle = '#000';
     ctx.fill();
 };
@@ -37,8 +38,9 @@ window.onload = function () {
 
             zeotrope.anim({
                 time: {
-                    start: new Date(now.getTime() + (i * 100)),
-                    easing: 'easeInOutCubic'
+                    start: new Date(now.getTime() + (i * 50)),
+                    easing: 'easeInOutCubic',
+                    duration: 800
                 },
                 draw: colClip.draw.bind(colClip)
             });
