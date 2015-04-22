@@ -12,16 +12,19 @@ var Canvas = function (el) {
 };
 
 Canvas.prototype = {
-	resize: function () {},
 	onResize: function () {
-		this.width = this.el.offsetWidth;
-        this.height = this.el.offsetHeight;
-        this.el.setAttribute('width', this.width);
-        this.el.setAttribute('height', this.height);
-        this.resize();
+		var w = this.el.offsetWidth,
+        	h = this.el.offsetHeight;
+
+        if (w !== this.width && h !== this.height) {
+        	this.width = w;
+        	this.height = h;
+			this.el.setAttribute('width', this.width);
+	        this.el.setAttribute('height', this.height);
+        }
 	},
 	clear: function () {
-		this.ctx.clearRect(0, 0, this.width, this.el.height);
+		this.ctx.clearRect(0, 0, this.width, this.height);
 	},
 	remove: function () {
 		window.removeEventListener(this._onResize);

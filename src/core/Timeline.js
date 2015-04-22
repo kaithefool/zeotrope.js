@@ -19,7 +19,8 @@ var defaults = {
 	easing: 'linear',
 	start: null,
 	end: null,
-	duration: 1000 // milliseconds
+	duration: 1000, // milliseconds
+	iterate: 1 // integer or 'infinite'
 };
 
 Timeline.prototype = {
@@ -32,5 +33,12 @@ Timeline.prototype = {
 		} else {
 			return this.easing( (now - this.start) / this.duration );
 		}
-	}
+	},
+	/**
+	 * TODOs
+	 */
+	reverse: function () {},
+	pause: function () {},
+	play: function () {},
+	goTo: function () {}
 };

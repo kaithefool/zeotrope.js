@@ -5,23 +5,27 @@ var Timeline = require('./../core/Timeline.js'),
 
 module.exports = Anim;
 
+/**
+ * TODO: multiple timelines
+ */
 function Anim (opt) {
 	this.opt = helpers.extend({}, defaults, opt);
 	this.time = new Timeline(opt.time);
+	this.draw = this.opt.draw;
 }
 
 var defaults = {
 	fillMode: 'none',
 	time: {},
-	draw: {}
+	draw: function () {} 
 };
 
 Anim.prototype = {
-	render: function () {
+	render: function (canvas) {
 		var progress = this.time.getProgress();
 
 		if (this.isFill()) {
-			this.draw(progress);
+			this.draw(canvas, progress);
 		}
 	},
 	isFill: function (progress) {
@@ -36,9 +40,6 @@ Anim.prototype = {
 		}
 
 		return true;
-	},
-	draw: function () {
-
 	},
 	detach: function () {
 		if (this._zeotrope) {

@@ -5,10 +5,10 @@ var Canvas = require('./core/Canvas.js'),
 	Anim = require('./render/Anim.js'),
 	helpers = require('./core/helpers.js');
 
+window.Zeotrope = Zeotrope;
+
 function Zeotrope (el) {
 	this.canvas = new Canvas(el);
-
-	// render frames
 	this.frame = frame.add(this.render.bind(this));
 }
 
@@ -26,7 +26,7 @@ Zeotrope.prototype = {
 	render: function () {
 		this.canvas.clear();
 		for (var i = 0; i < this.anims.length; i++) {
-			this.anims[i].render();
+			this.anims[i].render(this.canvas);
 		}
 	},
 	remove: function () {
