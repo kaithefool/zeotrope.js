@@ -11,8 +11,8 @@ function Timeline (options) {
 	// initialize
 	this.easing = easings[opt.easing];
 	this.start = opt.start instanceof Date ? opt.start : new Date();
-	this.end = opt.end instanceof Date ? opt.end : new Date(this.start.getDate() + opt.duration);
-	this.duration = opt.end - opt.start;
+	this.end = opt.end instanceof Date ? opt.end : new Date(this.start.getTime() + opt.duration);
+	this.duration = this.end - this.start;
 }
 
 var defaults = {
@@ -26,6 +26,7 @@ var defaults = {
 Timeline.prototype = {
 	getProgress: function (dateTime) {
 		var now = dateTime || new Date();
+
 		if (now < this.start) {
 			return 0;
 		} else if (now > this.end) {

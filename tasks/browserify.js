@@ -8,7 +8,7 @@ module.exports = function (grunt) {
                 debug: true
             }
         },
-        dev: {
+        dist: {
         	files: {
         		'dist/zeotrope.js': ['src/**/*.js']
         	}
