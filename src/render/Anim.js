@@ -23,8 +23,8 @@ var defaults = {
 Anim.prototype = {
 	render: function (canvas) {
 		var progress = this.time.getProgress();
-		
-		if (this.isFill()) {
+
+		if (this.isFill(progress)) {
 			this.draw(canvas, progress);
 		}
 	},
