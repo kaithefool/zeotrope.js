@@ -37,47 +37,9 @@ Img.prototype = {
         this.loaded = true;
     },
     getSize: function () {
-        if (typeof this.opt.size === 'string') { 
-            var size = scale(this.opt.size, this.el, this.canvas);
-            this.width = size.w;
-            this.height = size.h;
-        } else {
-
-        }
+        
     },
     getPosition: function () {
-        
+
     }
 };
-
-/**
- * Calculate background image size
- * @param  {string} type   'auto', 'contain' or 'cover'
- * @param  {object} child
- * @param  {object} parent 
- * @return {object}
- */
-function scale (type, child, parent) {
-    if (type === 'auto') {
-        return {
-            w: child.width,
-            h: child.height
-        };
-    }
-
-    var childAR = child.height / child.width,
-        parentAR = parent.height / parent.width,
-        sameHeight = type === 'cover' ? parentAR > childAR : parentAR < childAR;
-
-    if (sameHeight) {
-        return {
-            w: parent.height / childAR,
-            h: parent.height
-        };
-    } else {
-        return {
-            w: parent.width,
-            h: parent.width * childAR
-        };
-    }
-}

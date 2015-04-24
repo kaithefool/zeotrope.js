@@ -34,9 +34,14 @@ Canvas.prototype = {
             }
 
             // and all positions
+            for (var k = 0; k < this.positions.length; k++) {
+                this.positions[k].update();
+            }            
         }
     },
-    getPt: function () {},
+    getPt: function (pos) {
+
+    },
     getPosition: function () {
 
     },

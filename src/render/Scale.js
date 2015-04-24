@@ -43,7 +43,7 @@ function parseSizeStr (str) {
 
     return {
         width: val[0],
-        height: val[1].length === 1 ? val[0] : val[1] // repeat value for height if only width is provided
+        height: val.length === 1 ? val[0] : val[1] // repeat value for height if only width is provided
     };
 }
 
