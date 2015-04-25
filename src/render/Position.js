@@ -12,11 +12,13 @@ function Position (pos, parent, child) {
     }
 }
 
+Position.getPt = getPt;
+
 Position.prototype = {
     update: function () {
         var pt = getPt(this.pos, this.parent, this.child);
-        this.x = pt.x;
-        this.y = pt.y;
+        this.x = Math.round(pt.x);
+        this.y = Math.round(pt.y);
     },
     remove: function () {
         if (this.parent) {

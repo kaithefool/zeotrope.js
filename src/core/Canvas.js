@@ -1,7 +1,8 @@
 'use strict';
 
 var helpers = require('./helpers'),
-    Scale = require('./../render/Scale.js');
+    Scale = require('./../render/Scale.js'),
+    Position = require('./../render/Position.js');
 
 module.exports = Canvas;
 
@@ -12,7 +13,7 @@ function Canvas (el) {
     // onResize event
     this._resizeHandler = this._onResize.bind(this);
     window.addEventListener(this._resizeHandler);
-    this.onResize();
+    this._onResize();
 }
 
 Canvas.prototype = {
@@ -28,6 +29,10 @@ Canvas.prototype = {
             this.el.setAttribute('width', this.width);
             this.el.setAttribute('height', this.height);
 
+            /**
+             * TODO: skip non-percentage scales and positions
+             */
+
             // update all scales
             for (var i = 0; i < this.scales.length; i++) {
                 this.scales[i].update();
@@ -39,11 +44,13 @@ Canvas.prototype = {
             }            
         }
     },
-    getPt: function (pos) {
-
+    getPt: function (pos, child) {
+        return Position.getPt(pos, this, child);
     },
-    getPosition: function () {
-
+    getPosition: function (pos, child) {
+        var position = new Position(pos, this, child);
+        this.positions.push(position);
+        return position;
     },
     getSize: function (size, child) {
         return Scale.getSize(size, child, this);
@@ -58,6 +65,9 @@ Canvas.prototype = {
 
         if (obj instanceof Scale) {
             collection = this.scales;
+        }
+        if (obj instanceof Position) {
+            collection = this.positions;
         }
 
         helpers.remove(collection, obj);
