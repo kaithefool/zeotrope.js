@@ -1,9 +1,7 @@
 'use strict';
 
 var helpers = require('./helpers'),
-    Scale = require('./../render/Scale.js'),
-    Position = require('./../render/Position.js'),
-    Img = require('./../render/Img.js');
+    Dimension = require('./../render/Dimension.js');
 
 module.exports = Canvas;
 
@@ -18,8 +16,7 @@ function Canvas (el) {
 }
 
 Canvas.prototype = {
-    scales: [],
-    positions: [],
+    dimensions: [],
     _onResize: function () {
         var w = this.el.offsetWidth,
             h = this.el.offsetHeight;
@@ -34,44 +31,22 @@ Canvas.prototype = {
              * TODO: skip non-percentage scales and positions
              */
 
-            // update all scales
+            // update all dimension
             for (var i = 0; i < this.scales.length; i++) {
-                this.scales[i].update();
-            }
-
-            // and all positions
-            for (var k = 0; k < this.positions.length; k++) {
-                this.positions[k].update();
-            }            
+                this.dimensions[i].update();
+            }         
         }
     },
-    getPt: function (pos, child) {
-        return Position.getPt(pos, this, child);
-    },
-    getPosition: function (pos, child) {
-        var position = new Position(pos, this, child);
-        this.positions.push(position);
-        return position;
-    },
-    getSize: function (size, child) {
-        return Scale.getSize(size, child, this);
-    },
-    getScale: function (size, child) {
-        var scale = new Scale(size, child, this);
-        this.scales.push(scale);
-        return scale;
-    },
-    getImg: function (opt) {
-        return new Img(opt, this);
+    getDimension: function (opt, baseSize) {
+        var dimen = new Dimension(opt, baseSize, this);
+        this.dimensions.push(dimen);
+        return dimen;
     },
     detach: function (obj) {
         var collection;
 
-        if (obj instanceof Scale) {
-            collection = this.scales;
-        }
-        if (obj instanceof Position) {
-            collection = this.positions;
+        if (obj instanceof Dimension) {
+            collection = this.dimensions;
         }
 
         helpers.remove(collection, obj);
