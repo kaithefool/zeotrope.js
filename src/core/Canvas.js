@@ -2,7 +2,8 @@
 
 var helpers = require('./helpers'),
     Scale = require('./../render/Scale.js'),
-    Position = require('./../render/Position.js');
+    Position = require('./../render/Position.js'),
+    Img = require('./../render/Img.js');
 
 module.exports = Canvas;
 
@@ -59,6 +60,9 @@ Canvas.prototype = {
         var scale = new Scale(size, child, this);
         this.scales.push(scale);
         return scale;
+    },
+    getImg: function (opt) {
+        return new Img(opt, this);
     },
     detach: function (obj) {
         var collection;

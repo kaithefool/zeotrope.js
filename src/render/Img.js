@@ -4,18 +4,16 @@ var helpers = require('./../core/helpers.js');
 
 module.exports = Img;
 
-function Img (canvas, opt) {
-    this.canvas = canvas;
+function Img (opt, canvas) {
     this.opt = helpers.extend({}, defaults, opt);
 
     // preload
     this.el = new Image();
-    this.el.onload = this.onLoad.bind(this);
+    this.el.onload = this._onLoad.bind(this);
     this.el.src = this.opt.src;
 
-    // scale and position
-    this.scale = canvas.getScale(this.opt.size, this.el);
-    this.position = canvas.getPosition(this.opt.position);
+    // canvas
+    this.canvas = canvas;
 }
 
 var defaults = {
@@ -34,19 +32,13 @@ Img.prototype = {
             return;
         }
 
-        this.canvas.ctx.drawImage(this.x, this.y, this.width, this.height);
+        this.canvas.ctx.drawImage(this.position.x, this.position.y, this.scale.width, this.scale.height);
     },
-    onLoad: function () {
+    _onLoad: function () {
         this.loaded = true;
         
         // scale and position
         this.scale = this.canvas.getScale(this.opt.size, this.el);
         this.position = this.canvas.getPosition(this.opt.position);
-    },
-    setSizeNPos: function () {
-        this.width = this.scale.width;
-        this.height = this.scale.height;
-        this.x = this.position.x;
-        this.y = this.position.y;
     }
 };
