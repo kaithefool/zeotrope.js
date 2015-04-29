@@ -4,22 +4,23 @@ var helpers = require('./../core/helpers.js');
 
 module.exports = Img;
 
-function Img (opt, canvas) {
+function Img (src, opt, canvas) {
     this.opt = helpers.extend({}, defaults, opt);
 
     // preload
     this.el = new Image();
     this.el.onload = this._onLoad.bind(this);
-    this.el.src = this.opt.src;
+    this.el.src = src;
 
-    // canvas
     this.canvas = canvas;
 }
 
 var defaults = {
-    src: '',
-    size: 'auto', // see background-size css property,
-    position: 'center' // background-position
+    dimension: {
+        size: 'cover',
+        position: 'center',
+        origin: '50% 50%'
+    }
 };
 
 Img.prototype = {
@@ -32,13 +33,10 @@ Img.prototype = {
             return;
         }
 
-        this.canvas.ctx.drawImage(this.position.x, this.position.y, this.scale.width, this.scale.height);
+        this.canvas.ctx.drawImage(this.x, this.y, this.width, this.height);
     },
     _onLoad: function () {
         this.loaded = true;
-        
-        // scale and position
-        this.scale = this.canvas.getScale(this.opt.size, this.el);
-        this.position = this.canvas.getPosition(this.opt.position);
+        this.canvas.getDimension(this.opt.dimension, this.el);
     }
 };

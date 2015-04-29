@@ -27,12 +27,8 @@ Canvas.prototype = {
             this.el.setAttribute('width', this.width);
             this.el.setAttribute('height', this.height);
 
-            /**
-             * TODO: skip non-percentage scales and positions
-             */
-
             // update all dimension
-            for (var i = 0; i < this.scales.length; i++) {
+            for (var i = 0; i < this.dimensions.length; i++) {
                 this.dimensions[i].update();
             }         
         }
