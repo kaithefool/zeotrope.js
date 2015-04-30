@@ -48,6 +48,7 @@ module.exports = function (grunt) {
     /**
      * Tasks
      */
+    grunt.registerTask('test', ['karma:test']);
     grunt.registerTask('js', ['browserify', 'uglify', 'usebanner:js']);
     grunt.registerTask('default', ['js', 'watch']);
     

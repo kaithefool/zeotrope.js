@@ -24,16 +24,17 @@ var defaults = {
 };
 
 Img.prototype = {
-    width: 0,
-    height: 0,
-    x: 0,
-    y: 0,
-    draw: function () {
+    draw: function (dimen) {
         if (!this.loaded) {
             return;
         }
 
-        this.canvas.ctx.drawImage(this.x, this.y, this.width, this.height);
+        var di = this.dimension;
+        if (dimen) {
+            di = helpers.extend({}, this.dimension, dimen);
+        }
+
+        this.canvas.ctx.drawImage(di.x, di.y, di.width, di.height);
     },
     _onLoad: function () {
         this.loaded = true;
