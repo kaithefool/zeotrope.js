@@ -8,21 +8,7 @@ module.exports = function(grunt) {
             separator: ''
         },
         test: {
-            options: {
-                singleRun: true,
-                browsers: ['PhantomJS'],
-                logLevel: 'ERROR',
-                reporters: ['story', 'coverage']
-            }
-        },
-        watch: {
-            options: {
-                singleRun: false,
-                background: true,
-                browsers: ['PhantomJS'],
-                logLevel: 'ERROR',
-                reporters: ['story', 'coverage']
-            }
+            
         }
     });
 
