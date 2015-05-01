@@ -18,6 +18,16 @@ var defaults = {
     origin: 0
 };
 
+// const methods
+helpers.extend(Dimension, {
+    parsePropStr: parsePropStr,
+    percentToPx: percentToPx,
+    centerAt: centerAt,
+    fillWithAspectRatio: fillWithAspectRatio,
+    fullScale: fullScale
+});
+
+
 Dimension.prototype = {
     update: function () {
         if (this.opt.size) {
@@ -61,7 +71,7 @@ Dimension.prototype = {
         // adjust for origin
         if (this.opt.origin) {
             var origin = parsePropStr(this.opt.origin);
-            pt = centerAt(pt, this, {x: origin[0], y: origin[1]});
+            pt = centerAt(pt, {x: origin[0], y: origin[1]}, this);
         }
 
         return pt;
@@ -75,7 +85,7 @@ Dimension.prototype = {
 
 function parsePropStr (str) {
     str = str.replace('center', '50%');
-    str = str.replace(/top|left/g, 0);
+    str = str.replace(/top|left/g, '0');
     str = str.replace(/bottom|right/g, '100%');
     var val = str.split(' ');
 
@@ -89,10 +99,10 @@ function percentToPx (percent, parentPx) {
     return percent.indexOf('%') === -1 ? percent : percent.slice(0, -1) / 100 * parentPx;
 }
 
-function centerAt (pt, dimen, origin) {
+function centerAt (pt, origin, dimen) {
     return {
-        x: pt.x - percentToPx(origin.x, dimen.width),
-        y: pt.y - percentToPx(origin.y, dimen.height)
+        x: pt.x - (dimen ? percentToPx(origin.x, dimen.width) : origin.x),
+        y: pt.y - (dimen ? percentToPx(origin.y, dimen.height) : origin.y)
     };
 }
 
@@ -100,8 +110,8 @@ function fillWithAspectRatio (original, size) {
     var ar = original.height / original.width;
 
     return {
-        width: size.width === 'auto' ? size.height / ar : size.width,
-        height: size.height === 'auto' ? size.width * ar : size.height
+        width: size.width === 'auto' || !size.width ? size.height / ar : size.width,
+        height: size.height === 'auto' || !size.height ? size.width * ar : size.height
     };
 }
 

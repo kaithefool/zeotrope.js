@@ -28,7 +28,7 @@ module.exports = function(config) {
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             'test/specs/**/*Spec.js': ['browserify'],
-            'src/**/*.js': ['coverage']
+            'src/**/*.js': ['browserify', 'coverage']
         },
 
 
@@ -66,6 +66,6 @@ module.exports = function(config) {
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
-        singleRun: false
+        singleRun: true
     });
 };

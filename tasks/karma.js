@@ -7,7 +7,8 @@ module.exports = function(grunt) {
             configFile: 'test/karma.conf.js',
             separator: ''
         },
-        test: {
+        test: {},
+        watch: {
             
         }
     });

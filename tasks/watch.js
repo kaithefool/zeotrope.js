@@ -4,8 +4,8 @@ module.exports = function (grunt) {
 
     grunt.config.set('watch', {
     	js: {
-    		files: 'src/**/*',
-    		tasks: ['browserify']
+    		files: ['src/**/*', 'test/specs/**/*Spec.js'],
+    		tasks: ['browserify', 'karma:test']
     	}
     });
 
