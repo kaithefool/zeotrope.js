@@ -10,11 +10,12 @@ function Dimension (opt, baseSize, parent) {
     if (parent) {
         this.parent = parent;
     }
+    this.update();
 }
 
 var defaults = {
-    position: 'center',
-    size: 'contain',
+    position: null,
+    size: null,
     origin: 0
 };
 
@@ -52,20 +53,26 @@ Dimension.prototype = {
         } else {
             var scale = parsePropStr(this.opt.size);
             size = {
-                width: percentToPx(scale[0], this.parent.width),
-                height: percentToPx(scale[0], this.parent.height)
+                width: percentToPx(scale[0], this.parent ? this.parent.width : undefined),
+                height: percentToPx(scale[1], this.parent ? this.parent.height : undefined)
             };
 
-            size = fillWithAspectRatio(this.baseSize, size);
+            if (this.baseSize) {
+                size = fillWithAspectRatio(this.baseSize, size);    
+            }
         }
 
-        return size;
+        // only output number
+        return {
+            width: Number(size.width),
+            height: Number(size.height)
+        };
     },
     getPosition: function () {
         var pos = parsePropStr(this.opt.position),
             pt = {
-                x: percentToPx(pos[0], this.parent.width),
-                y: percentToPx(pos[1], this.parent.height)
+                x: percentToPx(pos[0], this.parent ? this.parent.width : undefined),
+                y: percentToPx(pos[1], this.parent ? this.parent.height : undefined)
             };
 
         // adjust for origin
@@ -74,7 +81,10 @@ Dimension.prototype = {
             pt = centerAt(pt, {x: origin[0], y: origin[1]}, this);
         }
 
-        return pt;
+        return {
+            x: Number(pt.x),
+            y: Number(pt.y)
+        };
     },
     remove: function () {
         if (this.parent) {

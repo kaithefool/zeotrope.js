@@ -8,9 +8,7 @@ module.exports = function(grunt) {
             separator: ''
         },
         test: {},
-        watch: {
-            
-        }
+        watch: {}
     });
 
 };

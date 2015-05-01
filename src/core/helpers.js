@@ -11,8 +11,11 @@ module.exports = {
 	extract: function (obj, properties) {
 		var result = {};
 		for (var i = 0; i < properties.length; i++) {
-			result[properties[i]] = obj[properties[i]];
+			if (obj[properties[i]]) {
+				result[properties[i]] = obj[properties[i]];	
+			}
 		}
+		return result;
 	},
 	remove: function (array, el) {
 		return array.splice(array.indexOf(el), 1);
