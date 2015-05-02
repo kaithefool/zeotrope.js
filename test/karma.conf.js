@@ -1,6 +1,8 @@
 // Karma configuration
 // Generated on Wed Apr 29 2015 17:16:12 GMT-0700 (PDT)
 
+var istanbul = require('browserify-istanbul');
+
 module.exports = function(config) {
     config.set({
 
@@ -35,6 +37,11 @@ module.exports = function(config) {
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
         reporters: ['progress', 'story', 'coverage', 'notify'],
+
+        browserify: {
+            debug: true,
+            transform: [istanbul({})]
+        },
 
         coverageReporter: {
             type: 'html',
