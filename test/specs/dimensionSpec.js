@@ -80,7 +80,7 @@ describe('Dimension', function () {
 
     it('should initialize without any arguments', function () {
         var dimen = new Dimension();
-        expect(dimen.opt).toBeTruthy(true);
+        expect(dimen).toBeTruthy(true);
     });
 
     describe('size', function () {
@@ -141,6 +141,27 @@ describe('Dimension', function () {
             }, {width: 100, height: 400}, {width: 100, height: 200});
             expect(dimen1.getPosition()).toEqual({x: 40, y: 20});
         });
+    });
+
+    it('should update', function () {
+        var parent = {width: 1200, height: 1200},
+            dimen = new Dimension({
+                size: 'cover',
+                position: 'center',
+                origin: '50% 50%'
+            }, {width: 100, height: 50}, parent);
+
+        expect(dimen.height).toBe(1200);
+        expect(dimen.x).toBe(-600);
+        expect(dimen.y).toBe(0);
+
+        parent.width = 1200;
+        parent.height = 300;
+        dimen.update();
+
+        expect(dimen.height).toBe(600);
+        expect(dimen.x).toBe(0);
+        expect(dimen.y).toBe(-150);
     });
 
 });
