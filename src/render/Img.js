@@ -39,5 +39,7 @@ Img.prototype = {
     _onLoad: function () {
         this.loaded = true;
         this.canvas.getDimension(this.opt.dimension, this.el);
-    }
+        this.onload();
+    },
+    onload: function () {}
 };

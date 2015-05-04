@@ -8,10 +8,16 @@ var Canvas = require('./core/Canvas.js'),
 
 window.Zeotrope = Zeotrope;
 
-function Zeotrope (el) {
+function Zeotrope (el, opt) {
+	this.opt = helpers.extend({}, defaults, opt);
+
 	this.canvas = new Canvas(el);
 	this.frame = frame.add(this.render.bind(this));
 }
+
+var defaults = {
+	removeOnComplete: false
+};
 
 Zeotrope.prototype = {
 	anims: [],
@@ -31,13 +37,27 @@ Zeotrope.prototype = {
 		helpers.remove(this.anims, anim);
 	},
 	render: function () {
+		var completed = true;
+
 		this.canvas.clear();
 		for (var i = 0; i < this.anims.length; i++) {
 			this.anims[i].render(this.canvas);
+			if (this.anims[i].progress !== 1) {
+				completed = false;
+			}
+		}
+
+		if (completed) {
+			this._onCompleted();
 		}
 	},
-	remove: function () {
+	_onCompleted: function () {
+		if (this.removeOnComplete) {
+			this.remove();
+		}
+	},
+	remove: function (removeEl) {
 		frame.remove(this.frame);
-		this.canvas.remove();
+		this.canvas.remove(removeEl);
 	}
 };

@@ -50,8 +50,10 @@ Canvas.prototype = {
     clear: function () {
         this.ctx.clearRect(0, 0, this.width, this.height);
     },
-    remove: function () {
+    remove: function (removeEl) {
         window.removeEventListener(this._resizeHandler);
-        this.el.parentElement.removeChild(this.el);
+        if (removeEl) {
+            this.el.parentElement.removeChild(this.el);
+        }
     }
 };

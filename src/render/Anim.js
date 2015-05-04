@@ -15,17 +15,17 @@ function Anim (opt) {
 }
 
 var defaults = {
-	fillMode: 'none',
+	fillMode: 'both',
 	time: {},
-	draw: function () {} 
+	draw: function () {}
 };
 
 Anim.prototype = {
 	render: function (canvas) {
-		var progress = this.time.getProgress();
+		this.progress = this.time.getProgress();
 
-		if (this.isFill(progress)) {
-			this.draw(canvas, progress);
+		if (this.isFill(this.progress)) {
+			this.draw(canvas, this.progress);
 		}
 	},
 	isFill: function (progress) {
