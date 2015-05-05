@@ -16,11 +16,9 @@ function Img (src, opt, canvas) {
 }
 
 var defaults = {
-    dimension: {
-        size: 'cover',
-        position: 'center',
-        origin: '50% 50%'
-    }
+    size: 'cover',
+    position: 'center',
+    origin: '50% 50%'
 };
 
 Img.prototype = {
@@ -34,11 +32,11 @@ Img.prototype = {
             di = helpers.extend({}, this.dimension, dimen);
         }
 
-        this.canvas.ctx.drawImage(di.x, di.y, di.width, di.height);
+        this.canvas.ctx.drawImage(this.el, di.x, di.y, di.width, di.height);
     },
     _onLoad: function () {
         this.loaded = true;
-        this.canvas.getDimension(this.opt.dimension, this.el);
+        this.dimension = this.canvas.getDimension(this.opt, this.el);
         this.onload();
     },
     onload: function () {}

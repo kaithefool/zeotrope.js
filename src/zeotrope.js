@@ -16,7 +16,7 @@ function Zeotrope (el, opt) {
 }
 
 var defaults = {
-	removeOnComplete: false
+	onComplete: function () {}
 };
 
 Zeotrope.prototype = {
@@ -47,13 +47,8 @@ Zeotrope.prototype = {
 			}
 		}
 
-		if (completed) {
-			this._onCompleted();
-		}
-	},
-	_onCompleted: function () {
-		if (this.removeOnComplete) {
-			this.remove();
+		if (this.opt.onComplete) {
+			this.opt.onComplete.apply(this);
 		}
 	},
 	remove: function (removeEl) {
