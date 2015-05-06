@@ -13,6 +13,7 @@ function Zeotrope (el, opt) {
 
 	this.canvas = new Canvas(el);
 	this.frame = frame.add(this.render.bind(this));
+	this.anims = [];
 }
 
 var defaults = {
@@ -20,7 +21,6 @@ var defaults = {
 };
 
 Zeotrope.prototype = {
-	anims: [],
 	anim: function (opt) {
 		var anim = new Anim(opt);
 		anim._zeotrope = this;
@@ -47,12 +47,13 @@ Zeotrope.prototype = {
 			}
 		}
 
-		if (this.opt.onComplete) {
+		if (completed && this.opt.onComplete) {
 			this.opt.onComplete.apply(this);
 		}
 	},
 	remove: function (removeEl) {
 		frame.remove(this.frame);
+		this.canvas.clear();
 		this.canvas.remove(removeEl);
 	}
 };

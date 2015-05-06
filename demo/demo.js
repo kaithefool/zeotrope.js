@@ -29,7 +29,7 @@ window.onload = function () {
         ctx.rect(x + di.x, y + di.y, w, h);
         ctx.clip();
         this.img.draw({
-            x: this.img.dimension.x - (x / 2)
+            x: this.img.dimension.x + (x / 2)
         });
         ctx.restore();
     };
@@ -37,7 +37,7 @@ window.onload = function () {
     function nextSlide () {
         var zeo = new Zeotrope(canvas, {
                 onComplete: function () {
-                    // this.remove();
+                    this.remove();
                 }
             }),
             now = new Date(),
