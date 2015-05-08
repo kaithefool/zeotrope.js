@@ -9,10 +9,6 @@ window.onload = function () {
        this.dimension = dimension;
     }
     ColumnClip.prototype.draw = function (canvas, progress) {
-        if (!this.img.loaded) {
-            return;
-        }
-
         var ctx = canvas.ctx,
             di = this.dimension,
             w = progress * di.width,
