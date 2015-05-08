@@ -11,6 +11,9 @@ function Timeline (options) {
 	// initialize
 	this.easing = easings[opt.easing];
 	this.start = opt.start instanceof Date ? opt.start : new Date();
+	if (opt.delay) {
+		this.start = new Date(this.start.getTime() + opt.delay);
+	}
 	this.end = opt.end instanceof Date ? opt.end : new Date(this.start.getTime() + opt.duration);
 	this.duration = this.end - this.start;
 }
@@ -19,6 +22,7 @@ var defaults = {
 	easing: 'linear',
 	start: null,
 	end: null,
+	delay: 0, // milliseconds
 	duration: 1000, // milliseconds
 	iterate: 1 // integer or 'infinite'
 };

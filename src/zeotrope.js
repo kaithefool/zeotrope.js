@@ -13,15 +13,25 @@ function Zeotrope (el, opt) {
 
 	this.canvas = new Canvas(el);
 	this.frame = frame.add(this.render.bind(this));
+
+	// collections
 	this.anims = [];
+	this.imgs = [];
 }
 
 var defaults = {
-	onComplete: function () {}
+	onComplete: function () {},
+	removeOnComplete: true,
+	onload: function () {},
+	startOnLoad: true
 };
 
 Zeotrope.prototype = {
 	anim: function (opt) {
+		if (this.opt.startOnLoad && this.imgs.length) {
+			opt.start = typeof opt.start === 'boolean' ? opt.start : false;
+		}
+
 		var anim = new Anim(opt);
 		anim._zeotrope = this;
 		this.anims.push(anim);
@@ -31,7 +41,33 @@ Zeotrope.prototype = {
 		return this.canvas.getDimension(opt, baseSize);
 	},
 	img: function (src, opt) {
-		return new Img(src, opt, this.canvas);
+		var img = new Img(src, opt, this.canvas);
+		img.onload = this._onload.bind(this);
+		this.imgs.push(img);
+		return img;
+	},
+	_onload: function () {
+		var loaded = true;
+		for (var i = 0; i < this.imgs.length; i++) {
+			if (!this.imgs[i].loaded) {
+				loaded = false;
+				break;
+			}
+		}
+
+		if (loaded) {
+			this.opt.onload();
+			if (this.opt.startOnLoad) {
+				this.startAnims();
+			}
+		}
+	},
+	startAnims: function () {
+		for (var i = 0; i < this.anims.length; i++) {
+			if (!this.anims[i].started) {
+				this.anims[i].start();
+			}
+		}
 	},
 	detach: function (anim) {
 		helpers.remove(this.anims, anim);
@@ -41,14 +77,23 @@ Zeotrope.prototype = {
 
 		this.canvas.clear();
 		for (var i = 0; i < this.anims.length; i++) {
-			this.anims[i].render(this.canvas);
+			if (this.anims[i].started) {
+				this.anims[i].render(this.canvas);
+			}
+
+			/**
+			 * TODO: What if it has iteration?
+			 */
 			if (this.anims[i].progress !== 1) {
 				completed = false;
 			}
 		}
 
-		if (completed && this.opt.onComplete) {
+		if (completed) {
 			this.opt.onComplete.apply(this);
+			if (this.opt.removeOnComplete) {
+				this.remove();
+			}
 		}
 	},
 	remove: function (removeEl) {

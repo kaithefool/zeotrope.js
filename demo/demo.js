@@ -2,10 +2,6 @@
 
 window.onload = function () {
 
-    // preload
-    var img = new Image();
-    img.src = './image1.jpg';
-
     var canvas = document.getElementById('demo-0');
 
     function ColumnClip (img, dimension) {
@@ -35,12 +31,7 @@ window.onload = function () {
     };
 
     function nextSlide () {
-        var zeo = new Zeotrope(canvas, {
-                onComplete: function () {
-                    this.remove();
-                }
-            }),
-            now = new Date(),
+        var zeo = new Zeotrope(canvas),
             cols = Math.floor(zeo.canvas.width / 96),
             img = zeo.img('./image1.jpg');
 
@@ -52,7 +43,7 @@ window.onload = function () {
             zeo.anim({
                 fillMode: 'forward',
                 time: {
-                    start: new Date(now.getTime() + (i * 50)),
+                    delay: i * 50,
                     easing: 'easeInOutCubic',
                     duration: 800
                 },

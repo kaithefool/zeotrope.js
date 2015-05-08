@@ -10,17 +10,25 @@ module.exports = Anim;
  */
 function Anim (opt) {
 	this.opt = helpers.extend({}, defaults, opt);
-	this.time = new Timeline(opt.time);
-	this.draw = this.opt.draw;
+	if (this.opt.start) {
+		this.start();
+	}
 }
 
 var defaults = {
 	fillMode: 'both',
 	time: {},
+	start: true,
 	draw: function () {}
 };
 
 Anim.prototype = {
+	started: false,
+	start: function () {
+		this.time = new Timeline(this.opt.time);
+		this.draw = this.opt.draw;
+		this.started = true;
+	},
 	render: function (canvas) {
 		this.progress = this.time.getProgress();
 
