@@ -15,7 +15,7 @@ function Timeline (options) {
 		this.start = new Date(this.start.getTime() + opt.delay);
 	}
 	this.end = opt.end instanceof Date ? opt.end : new Date(this.start.getTime() + opt.duration);
-	this.duration = this.end - this.start;
+	this.duration = this.end.getTime() - this.start;
 }
 
 var defaults = {
@@ -42,27 +42,35 @@ Timeline.prototype = {
 	getCurrent: function (now) {
 		now = now ? now : new Date();
 
-		if (now < this.start) {
+		if (this.pausedAt !== null) {
+			return this.pausedAt;
+		} else if (now < this.start) {
 			return 0;
 		} else if (now > this.end) {
 			return 1;
-		} else if (this.pausedAt !== null) {
-			return this.pausedAt;
 		} else {
 			return (now - this.start) / this.duration;
 		}
 	},
-	pause: function () {
-		this.pausedAt = this.getCurrent();
+	pause: function (now) {
+		this.pausedAt = this.getCurrent(now);
 	},
-	reverse: function () {
-		var current = this.getCurrent();
+	reverse: function (now) {
+		var current = this.getCurrent(now);
 
-		this.start = new Date(this.end - (current * this.duration));
+		this.end = new Date(now.getTime() + (current * this.duration));
+		this.start = new Date(this.end.getTime() - this.duration);
 		this.backward = this.backward ? false : true;
+
+		return this.getCurrent(now);
 	},
-	play: function () {
-		this.start = this.end - ((1 - this.pausedAt) * this.duration);
-		this.pausedAt = null;
+	play: function (now) {
+		if (this.pausedAt) {
+			now = now ? now : new Date();
+
+			this.end = new Date(now.getTime() + ((1 - this.pausedAt) * this.duration));
+			this.start = new Date(this.end.getTime() - this.duration);
+			this.pausedAt = null;
+		}
 	}
 };
