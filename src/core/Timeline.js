@@ -28,22 +28,44 @@ var defaults = {
 };
 
 Timeline.prototype = {
-	getProgress: function (dateTime) {
-		var now = dateTime || new Date();
+	backward: false,
+	pausedAt: null,
+	getProgress: function (now) {
+		var current = this.getCurrent(now);
+
+		if (this.backward) {
+			current = 1 - current;
+		}
+
+		return current === 0 || current === 1 ? current : this.easing(current);
+	},
+	getCurrent: function (now) {
+		now = now ? now : new Date();
 
 		if (now < this.start) {
 			return 0;
 		} else if (now > this.end) {
 			return 1;
+		} else if (this.pausedAt !== null) {
+			return this.pausedAt;
 		} else {
-			return this.easing( (now - this.start) / this.duration );
+			return (now - this.start) / this.duration;
 		}
 	},
 	/**
 	 * TODOs
 	 */
-	reverse: function () {},
-	pause: function () {},
-	play: function () {},
-	goTo: function () {}
+	pause: function () {
+		this.pausedAt = this.getCurrent();
+	},
+	reverse: function () {
+		var current = this.getCurrent();
+
+		this.start = new Date(this.end - (current * this.duration));
+		this.backward = this.backward ? false : true;
+	},
+	play: function () {
+		this.start = this.end - ((1 - this.pausedAt) * this.duration);
+		this.pausedAt = null;
+	}
 };
