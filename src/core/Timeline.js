@@ -52,9 +52,6 @@ Timeline.prototype = {
 			return (now - this.start) / this.duration;
 		}
 	},
-	/**
-	 * TODOs
-	 */
 	pause: function () {
 		this.pausedAt = this.getCurrent();
 	},

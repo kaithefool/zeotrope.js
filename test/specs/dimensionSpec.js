@@ -1,6 +1,6 @@
 'use strict';
 
-var Dimension =  require('./../../src/render/Dimension.js');
+var Dimension = require('./../../src/render/Dimension.js');
 
 describe('Dimension', function () {
 
