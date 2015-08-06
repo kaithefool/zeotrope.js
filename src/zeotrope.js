@@ -21,7 +21,8 @@ function Zeotrope (el, opt) {
 
 var defaults = {
 	onComplete: function () {},
-	removeOnComplete: true,
+	destroyOnComplete: true,
+	removeElOnComplete: true,
 	onload: function () {},
 	startOnLoad: true
 };
@@ -92,7 +93,7 @@ Zeotrope.prototype = {
 		if (completed) {
 			this.opt.onComplete.apply(this);
 			if (this.opt.removeOnComplete) {
-				this.remove();
+				this.remove(this.opt.removeElOnComplete);
 			}
 		}
 	},
