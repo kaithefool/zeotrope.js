@@ -27,7 +27,9 @@ window.onload = function () {
     };
 
     function nextSlide () {
-        var zeo = new Zeotrope(canvas),
+        var zeo = new Zeotrope(canvas, {
+            removeElOnComplete: false
+        }),
             cols = Math.floor(zeo.canvas.width / 96),
             img = zeo.img('./image1.jpg');
 

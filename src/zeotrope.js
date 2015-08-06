@@ -92,7 +92,7 @@ Zeotrope.prototype = {
 
 		if (completed) {
 			this.opt.onComplete.apply(this);
-			if (this.opt.removeOnComplete) {
+			if (this.opt.destroyOnComplete) {
 				this.remove(this.opt.removeElOnComplete);
 			}
 		}
