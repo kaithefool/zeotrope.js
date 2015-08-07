@@ -30,8 +30,8 @@ window.onload = function () {
         var zeo = new Zeotrope(canvas, {
             removeElOnComplete: false
         }),
-            cols = Math.floor(zeo.canvas.width / 96),
-            img = zeo.img('./image1.jpg');
+        cols = Math.floor(zeo.canvas.width / 96),
+        img = zeo.img('./image1.jpg');
 
         for (var i = 0; i < cols; i++) {
             var colClip = new ColumnClip(img, zeo.dimension({
