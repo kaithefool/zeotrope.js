@@ -94,6 +94,7 @@ Dimension.prototype = {
 };
 
 function parsePropStr (str) {
+    str = str.toString();
     str = str.replace('center', '50%');
     str = str.replace(/top|left/g, '0');
     str = str.replace(/bottom|right/g, '100%');
