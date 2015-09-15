@@ -33,7 +33,7 @@ Anim.prototype = {
 		this.progress = this.time.getProgress();
 
 		if (this.isFill(this.progress)) {
-			this.draw(canvas, this.progress);
+			this.draw(canvas, this.progress, this.opt);
 		}
 	},
 	isFill: function (progress) {
