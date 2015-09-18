@@ -8,14 +8,22 @@ module.exports = Timeline;
 function Timeline (options) {
 	var opt = this.opt = helpers.extend({}, defaults, options);
 
+	/**
+	 * todo: rewrite this
+	 */
+
 	// initialize
 	this.easing = easings[opt.easing];
 	this.start = opt.start instanceof Date ? opt.start : new Date();
 	if (opt.delay) {
 		this.start = new Date(this.start.getTime() + opt.delay);
 	}
-	this.end = opt.end instanceof Date ? opt.end : new Date(this.start.getTime() + opt.duration);
-	this.duration = this.end.getTime() - this.start;
+	if (opt.iterate !== 'infinite') {
+		this.end = opt.end instanceof Date ? opt.end : new Date(this.start.getTime() + (opt.duration*opt.iterate));
+		this.duration = (this.end.getTime() - this.start) / opt.iterate;
+	} else {
+		this.duration = opt.duration;
+	}
 }
 
 var defaults = {
@@ -46,10 +54,10 @@ Timeline.prototype = {
 			return this.pausedAt;
 		} else if (now < this.start) {
 			return 0;
-		} else if (now > this.end) {
+		} else if (this.end && now > this.end) {
 			return 1;
 		} else {
-			return (now - this.start) / this.duration;
+			return ( (now - this.start) / this.duration ) % 1;
 		}
 	},
 	pause: function (now) {
