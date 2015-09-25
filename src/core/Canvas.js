@@ -11,7 +11,7 @@ function Canvas (el) {
 
     // onResize event
     this._resizeHandler = this._onResize.bind(this);
-    window.addEventListener(this._resizeHandler);
+    window.addEventListener('resize', this._resizeHandler);
     this._onResize();
 }
 
