@@ -24,7 +24,8 @@ var defaults = {
 	destroyOnComplete: true,
 	removeElOnComplete: true,
 	onload: function () {},
-	startOnLoad: true
+	startOnLoad: true,
+	clearOnFrame: true
 };
 
 Zeotrope.prototype = {
@@ -76,7 +77,9 @@ Zeotrope.prototype = {
 	render: function () {
 		var completed = true;
 
-		this.canvas.clear();
+		if (this.opt.clearOnFrame) {
+			this.canvas.clear();
+		}
 		for (var i = 0; i < this.anims.length; i++) {
 			if (this.anims[i].started) {
 				this.anims[i].render(this.canvas);
