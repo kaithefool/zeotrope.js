@@ -51,7 +51,7 @@ Canvas.prototype = {
         this.ctx.clearRect(0, 0, this.width, this.height);
     },
     remove: function (removeEl) {
-        window.removeEventListener(this._resizeHandler);
+        window.removeEventListener('resize', this._resizeHandler);
         if (removeEl) {
             this.el.parentElement.removeChild(this.el);
         }
