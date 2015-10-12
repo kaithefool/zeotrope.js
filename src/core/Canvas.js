@@ -24,6 +24,7 @@ Canvas.prototype = {
         if (w !== this.width && h !== this.height) {
             this.width = w;
             this.height = h;
+            this.diagonal = Math.sqrt((w*w) + (h*h));
             this.el.setAttribute('width', this.width);
             this.el.setAttribute('height', this.height);
 
@@ -31,8 +32,11 @@ Canvas.prototype = {
             for (var i = 0; i < this.dimensions.length; i++) {
                 this.dimensions[i].update();
             }         
+
+            this.resize();
         }
     },
+    resize: function () {},
     getDimension: function (opt, baseSize) {
         var dimen = new Dimension(opt, baseSize, this);
         this.dimensions.push(dimen);
