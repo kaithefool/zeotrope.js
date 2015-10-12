@@ -21,7 +21,7 @@ Canvas.prototype = {
         var w = this.el.offsetWidth,
             h = this.el.offsetHeight;
 
-        if (w !== this.width && h !== this.height) {
+        if (w !== this.width || h !== this.height) {
             this.width = w;
             this.height = h;
             this.diagonal = Math.sqrt((w*w) + (h*h));
