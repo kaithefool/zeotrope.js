@@ -1,0 +1,9 @@
+{
+    "browser"   : true,
+    "es3"       : true,
+    "jquery"    : true,
+    "globals"   : {
+        "require"   : false,
+        "define"    : false
+    }
+}
